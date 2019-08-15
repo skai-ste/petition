@@ -24,11 +24,7 @@ app.post("/petition", (req, res) => {
     db.addSignature(req.body.firstname, req.body.lastname, req.body.signature)
         .then(id => {
             console.log(id.rows);
-            res.send(
-                `<p>Your name: ${req.body.firstname} , your last name: ${
-                    req.body.lastname
-                } and your ${req.body.signature}</p>`
-            );
+            res.redirect("/thanks");
         })
         .catch(err => {
             console.log("ERROR :", err);
