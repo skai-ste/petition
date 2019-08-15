@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const hb = require("express-handlebars");
+// var context = document.getElementById("canv").getContext("2d");
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
