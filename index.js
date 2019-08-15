@@ -18,6 +18,19 @@ app.get("/petition", (req, res) => {
     res.render("petition");
 });
 
+app.post("/petition", (req, res) => {
+    console.log("made it to the post route");
+    console.log("req.body: ", req.body);
+    console.log(`firstname: ${req.body.firstname}`);
+    console.log(`lastname: ${req.body.lastname}`);
+    console.log(`signature: ${req.body.signature}`);
+    res.send(
+        `<p>Your name: ${req.body.firstname} , your last name: ${
+            req.body.lastname
+        } and your ${req.body.signature}</p>`
+    );
+});
+
 app.listen(8080, () => {
     console.log("my server is running");
 });
