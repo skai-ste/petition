@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const hb = require("express-handlebars");
+const db = require("./db");
+
 // var context = document.getElementById("canv").getContext("2d");
 
 app.engine("handlebars", hb());
@@ -19,16 +21,23 @@ app.get("/petition", (req, res) => {
 });
 
 app.post("/petition", (req, res) => {
-    console.log("made it to the post route");
-    console.log("req.body: ", req.body);
-    console.log(`firstname: ${req.body.firstname}`);
-    console.log(`lastname: ${req.body.lastname}`);
-    console.log(`signature: ${req.body.signature}`);
-    res.send(
-        `<p>Your name: ${req.body.firstname} , your last name: ${
-            req.body.lastname
-        } and your ${req.body.signature}</p>`
-    );
+    db.addSignature(req.body.firstname, req.body.lastname, req.body.signature)
+        .then(id => {
+            console.log(id.rows);
+            res.send(
+                `<p>Your name: ${req.body.firstname} , your last name: ${
+                    req.body.lastname
+                } and your ${req.body.signature}</p>`
+            );
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+            res.send(`<p>Please try again, babe!</p>`);
+        });
+});
+
+app.get("/thanks", (req, res) => {
+    res.render("thanks");
 });
 
 app.listen(8080, () => {
