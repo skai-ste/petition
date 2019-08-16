@@ -3,8 +3,9 @@ const { dbuser, dbpass } = require("./secrets.json");
 
 const db = spicedPg(`postgres:${dbuser}:${dbpass}@localhost:5432/petition`);
 
-exports.getSignatures = function() {
-    return db.query(`SELECT id, signature AS "sign" FROM petition`);
+exports.getInfo = function() {
+    return db.query(`SELECT firstname, lastname FROM petition`);
+    // `SELECT COUNT(*) FROM petition`
 };
 
 exports.addSignature = function(firstName, lastName, sign) {
