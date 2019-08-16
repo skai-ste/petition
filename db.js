@@ -12,6 +12,7 @@ exports.addSignature = function(firstName, lastName, sign) {
         .query(
             `INSERT INTO petition (firstname, lastname, signature) VALUES ($1, $2, $3) RETURNING id`,
             [firstName, lastName, sign]
+            // [firstName || null, lastName || null, sign || null] is it's underfined it not gonna put in the table
         )
         .then(({ rows }) => {
             return rows[0].id;
