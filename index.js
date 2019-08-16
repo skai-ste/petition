@@ -68,7 +68,12 @@ app.get("/thanks", (req, res) => {
 app.get("/signers", (req, res) => {
     db.getInfo()
         .then(result => {
-            console.log("result: ", result.rows);
+            let signedUsers = result.rows;
+            res.render("signers", {
+                layout: "main",
+                signedUsers: signedUsers
+            });
+            console.log("result: ", result.rows.length);
         })
         .catch(err => {
             console.log("ERROR :", err);
