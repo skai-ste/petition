@@ -1,12 +1,17 @@
 body {
-    background-color: red;
+    background-color: whitesmoke;
 }
 .paint-canvas {
     border: 1px black solid;
     display: block;
     margin: 1rem;
 }
-
-.js-color-picker {
-    margin: 1rem 1rem 0 1rem;
+button {
+    height: 2rem;
+    width: 5rem;
+    background-color: whitesmoke;
+    border: 1px black solid;
+    color: black;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 15px;
 }
