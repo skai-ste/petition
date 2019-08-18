@@ -47,6 +47,7 @@ app.get("/petition", (req, res) => {
     // console.log("req.session.curry: ", req.session.curry);
     // console.log("************* /Petition ********");
     res.render("petition");
+    // res.sendStatus(404);
 });
 
 app.post("/petition", (req, res) => {
