@@ -2,6 +2,7 @@ const express = require("express");
 const hb = require("express-handlebars");
 const db = require("./db");
 var cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 const csurf = require("csurf");
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(
         extended: false
     })
 );
+
+app.use(cookieParser());
 
 app.use(
     cookieSession({
@@ -53,6 +56,7 @@ app.post("/petition", (req, res) => {
     db.addSignature(req.body.firstname, req.body.lastname, req.body.signature)
         .then(id => {
             console.log(id.rows);
+            res.cookie("signed", "true");
             res.redirect("/thanks");
         })
         .catch(err => {
@@ -64,22 +68,30 @@ app.post("/petition", (req, res) => {
 });
 
 app.get("/thanks", (req, res) => {
-    res.render("thanks");
+    if (req.cookies.signed) {
+        res.render("thanks");
+    } else {
+        res.sendStatus(404);
+    }
 });
 
 app.get("/signers", (req, res) => {
-    db.getInfo()
-        .then(result => {
-            let signedUsers = result.rows;
-            res.render("signers", {
-                layout: "main",
-                signedUsers: signedUsers
+    if (req.cookies.signed) {
+        db.getInfo()
+            .then(result => {
+                let signedUsers = result.rows;
+                res.render("signers", {
+                    layout: "main",
+                    signedUsers: signedUsers
+                });
+                console.log("result: ", result.rows.length);
+            })
+            .catch(err => {
+                console.log("ERROR :", err);
             });
-            console.log("result: ", result.rows.length);
-        })
-        .catch(err => {
-            console.log("ERROR :", err);
-        });
+    } else {
+        res.sendStatus(404);
+    }
     // res.render("signers");
 });
 
