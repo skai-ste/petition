@@ -11,3 +11,7 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button type='submit'>submit</button>
 </form>
+
+{{#if error}}
+    <p id="try-again">Please try again, babe!</p>
+{{/if}}
