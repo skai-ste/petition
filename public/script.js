@@ -10,6 +10,9 @@ let isMouseDown = false;
 
 const stopDrawing = () => {
     isMouseDown = false;
+    var dataURL = paintCanvas.toDataURL();
+    console.log(dataURL);
+    document.getElementById("signInput").value = dataURL;
 };
 const startDrawing = event => {
     isMouseDown = true;
