@@ -47,7 +47,6 @@ app.get("/petition", (req, res) => {
     // console.log("req.session.curry: ", req.session.curry);
     // console.log("************* /Petition ********");
     res.render("petition");
-    // res.sendStatus(404);
 });
 
 app.post("/petition", (req, res) => {
@@ -58,7 +57,9 @@ app.post("/petition", (req, res) => {
         })
         .catch(err => {
             console.log("ERROR :", err);
-            res.send(`<p>Please try again, babe!</p>`);
+            res.render("petition", {
+                error: true
+            });
         });
 });
 
