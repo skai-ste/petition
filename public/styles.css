@@ -15,3 +15,6 @@ button {
     font-family: verdana;
     font-size: 15px;
 }
+#try-again {
+    background-color: tomato;
+}
