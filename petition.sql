@@ -1,8 +1,17 @@
 DROP TABLE IF EXISTS petition;
 
-CREATE TABLE petition (
+CREATE TABLE signatures (
     id SERIAL PRIMARY KEY,
-    firstname VARCHAR(99) NOT NULL CHECK (firstname != ''),
-    lastname VARCHAR(99) NOT NULL CHECK (lastname != ''),
-    signature VARCHAR NOT NULL CHECK (signature != '')
+     signatures TEXT NOT NULL,
+     user_id INTEGER NOT NULL,  --REFERENCES users(id)
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+ );
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    first VARCHAR(255) NOT NULL,
+    last VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
