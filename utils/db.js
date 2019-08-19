@@ -10,7 +10,7 @@ exports.getInfo = function() {
 exports.addSignature = function(firstName, lastName, sign) {
     return db
         .query(
-            `INSERT INTO petition (firstname, lastname, signature) VALUES ($1, $2, $3) RETURNING id`,
+            `INSERT INTO petition (signature, user_id) VALUES ($1, $2, $3) RETURNING id`,
             [firstName, lastName, sign]
             // [firstName || null, lastName || null, sign || null] is it's underfined it not gonna put in the table
         )
@@ -21,8 +21,15 @@ exports.addSignature = function(firstName, lastName, sign) {
 
 exports.getSignature = function(id) {
     return db
-        .query(`SELECT signature FROM petition WHERE id = $1`, [id])
+        .query(`SELECT signature FROM petition WHERE user_id = $1`, [id])
         .then(({ rows }) => {
             return rows[0].signature;
         });
+};
+
+exports.addUser = function(firstName, lastName, email, hashedPsw) {
+    return db.query(
+        `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING id`,
+        [firstName || null, lastName || null, email || null, hashedPsw || null]
+    );
 };
