@@ -40,37 +40,21 @@ app.use(
     })
 );
 
-// app.get("/", (req, res) => {
-//     //lets look at the hash function.
-//     // would probably look like req.body.password
-//     hash("12345")
-//         .then(hash => {
-//             console.log("hash: ", hash);
-//             //lets look at compare
-//             compare("12345", hash)
-//                 .then(match => {
-//                     console.log("did my pasword match?");
-//                     console.log(match);
-//                 })
-//                 .catch(e => console.log(e));
-//         })
-//         .catch(e => console.log(e));
-//     //res.redirect('/petition');
-//     // db.testFunction();
-// });
-
 app.get("/register", (req, res) => {
     res.render("register");
 });
 
 app.post("/register", (req, res) => {
-    console.log("req.body", req.body);
-    db.addUser(
-        req.body.firstname,
-        req.body.lastname,
-        req.body.emailaddress,
-        req.body.pwd
-    )
+    hash(req.body.pwd)
+        .then(hashedPsw => {
+            console.log("hashedPsw: ", hashedPsw);
+            return db.addUser(
+                req.body.firstname,
+                req.body.lastname,
+                req.body.emailaddress,
+                hashedPsw
+            );
+        })
         .then(result => {
             console.log("result :", result);
             res.render("petition");
@@ -88,10 +72,20 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    db.addUser(req.body.emailaddress, req.body.pwd)
-        .then(result => {
-            console.log("result :", result);
-            res.render("petition");
+    db.getPassword(req.body.emailaddress)
+        .then(hashedPsw => {
+            return compare(req.body.pwd, hashedPsw);
+        })
+        .then(match => {
+            console.log("did my pasword match?");
+            console.log(match);
+            if (match) {
+                res.redirect("petition");
+            } else {
+                res.render("login", {
+                    error: true
+                });
+            }
         })
         .catch(err => {
             console.log("ERROR :", err);
@@ -121,8 +115,8 @@ app.post("/petition", (req, res) => {
 });
 
 app.get("/thanks", (req, res) => {
-    if (req.session.user_id) {
-        db.getSignature(req.session.user_id).then(result => {
+    if (req.session.signatureId) {
+        db.getSignature(req.session.signatureId).then(result => {
             console.log("result :", result);
             res.render("thanks", {
                 signature: result
