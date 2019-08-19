@@ -1,5 +1,5 @@
 const spicedPg = require("spiced-pg");
-const { dbuser, dbpass } = require("./secrets.json");
+const { dbuser, dbpass } = require("../secrets.json");
 
 const db = spicedPg(`postgres:${dbuser}:${dbpass}@localhost:5432/petition`);
 
@@ -16,5 +16,13 @@ exports.addSignature = function(firstName, lastName, sign) {
         )
         .then(({ rows }) => {
             return rows[0].id;
+        });
+};
+
+exports.getSignature = function(id) {
+    return db
+        .query(`SELECT signature FROM petition WHERE id = $1`, [id])
+        .then(({ rows }) => {
+            return rows[0].signature;
         });
 };

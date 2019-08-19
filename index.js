@@ -1,10 +1,12 @@
 const express = require("express");
 const hb = require("express-handlebars");
-const db = require("./db");
+const db = require("./utils/db");
+const { hash, compare } = require("./utils/bc");
 var cookieSession = require("cookie-session");
-const cookieParser = require("cookie-parser");
 const csurf = require("csurf");
 const app = express();
+
+hash("12345");
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
@@ -14,8 +16,6 @@ app.use(
         extended: false
     })
 );
-
-app.use(cookieParser());
 
 app.use(
     cookieSession({
@@ -40,23 +40,34 @@ app.use(
     })
 );
 
+app.get("/", (req, res) => {
+    //lets look at the hash function.
+    // would probably look like req.body.password
+    hash("12345")
+        .then(hash => {
+            console.log("hash: ", hash);
+            //lets look at compare
+            compare("12345", hash)
+                .then(match => {
+                    console.log("did my pasword match?");
+                    console.log(match);
+                })
+                .catch(e => console.log(e));
+        })
+        .catch(e => console.log(e));
+    //res.redirect('/petition');
+    // db.testFunction();
+});
+
 app.get("/petition", (req, res) => {
-    // console.log("************* / Petition ********");
-    // // lets look at req. session.
-    // console.log("req.session ", req.session);
-    // //lets take a look at sassafras
-    // console.log("req.session.sassafras: ", req.session.sassafras);
-    // //lets take a look at something we know is not there
-    // console.log("req.session.curry: ", req.session.curry);
-    // console.log("************* /Petition ********");
     res.render("petition");
 });
 
 app.post("/petition", (req, res) => {
     db.addSignature(req.body.firstname, req.body.lastname, req.body.signature)
         .then(id => {
-            console.log(id.rows);
-            res.cookie("signed", "true");
+            console.log(id);
+            req.session.signatureId = id;
             res.redirect("/thanks");
         })
         .catch(err => {
@@ -68,15 +79,20 @@ app.post("/petition", (req, res) => {
 });
 
 app.get("/thanks", (req, res) => {
-    if (req.cookies.signed) {
-        res.render("thanks");
+    if (req.session.signatureId) {
+        db.getSignature(req.session.signatureId).then(result => {
+            console.log("result :", result);
+            res.render("thanks", {
+                signature: result
+            });
+        });
     } else {
-        res.sendStatus(404);
+        res.redirect("/petition");
     }
 });
 
 app.get("/signers", (req, res) => {
-    if (req.cookies.signed) {
+    if (req.session.signatureId) {
         db.getInfo()
             .then(result => {
                 let signedUsers = result.rows;
@@ -90,7 +106,7 @@ app.get("/signers", (req, res) => {
                 console.log("ERROR :", err);
             });
     } else {
-        res.sendStatus(404);
+        res.redirect("/petition");
     }
     // res.render("signers");
 });
@@ -98,25 +114,3 @@ app.get("/signers", (req, res) => {
 app.listen(8080, () => {
     console.log("my server is running");
 });
-
-//////////
-// app.get("/petition", (req, res) => {
-//     console.log("************* / ROUTE ********");
-//     // req. session starts off life as an empty object
-//     console.log("req.session when it starts", req.session);
-//     //lets add something to session.
-//     req.session.sassafras = "<3";
-//     console.log("req.sesseion after adding", req.session);
-//     console.log("************* / ROUTE ********");
-//     res.render("petition");
-// });
-
-// console.log("************* / ROUTE ********");
-// // req. session starts off life as an empty object
-// console.log("req.session when it starts", req.session);
-// //lets add something to session.
-// //
-// // req.session.Signatureid = signature from data base
-//
-// console.log("req.sesseion after adding", req.session);
-// console.log("************* / ROUTE ********");
