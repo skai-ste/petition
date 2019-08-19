@@ -64,11 +64,12 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+    console.log("req.body", req.body);
     db.addUser(
         req.body.firstname,
         req.body.lastname,
-        req.body.email,
-        req.body.password
+        req.body.emailaddress,
+        req.body.pwd
     )
         .then(result => {
             console.log("result :", result);
@@ -86,7 +87,19 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 
-app.post("/login", (req, res) => {});
+app.post("/login", (req, res) => {
+    db.addUser(req.body.emailaddress, req.body.pwd)
+        .then(result => {
+            console.log("result :", result);
+            res.render("petition");
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+            res.render("login", {
+                error: true
+            });
+        });
+});
 
 app.get("/petition", (req, res) => {
     res.render("petition");
