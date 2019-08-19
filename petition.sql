@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS petition;
+DROP TABLE IF EXISTS signatures;
 
 CREATE TABLE signatures (
     id SERIAL PRIMARY KEY,
@@ -6,6 +6,8 @@ CREATE TABLE signatures (
      user_id INTEGER NOT NULL,  --REFERENCES users(id)
      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
  );
+
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
