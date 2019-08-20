@@ -27,7 +27,7 @@ exports.getSignature = function(id) {
     return db
         .query(`SELECT signature FROM signatures WHERE user_id = $1`, [id])
         .then(({ rows }) => {
-            return rows[0].signature;
+            return rows[0];
         });
 };
 
@@ -47,9 +47,9 @@ exports.getPassword = function(email) {
         });
 };
 
-exports.addUserProfile = function(age, city, homePage) {
+exports.addUserProfile = function(age, city, homePage, userId) {
     return db.query(
-        `INSERT INTO user_profiles (age, city, url) VALUES ($1, $2, $3) RETURNING id`,
-        [age || null, city || null, homePage || null]
+        `INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id`,
+        [age || null, city || null, homePage || null, userId || null]
     );
 };
