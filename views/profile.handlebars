@@ -1,0 +1,16 @@
+<h2>Now please tell us a little bit more about yourself.</h2>
+
+<form method='POST'>
+    <input type="number" name="age" placeholder="age" autocomplete="off">
+    </input>
+    <input type="text" name="city" placeholder="city" autocomplete="off">
+    </input>
+    <input type="url" name="homePage" placeholder="homepage" autocomplete="off">
+    </input>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    <button type='submit'>continue</button>
+</form>
+
+{{#if error}}
+    <p id="try-again">Please try again!</p>
+{{/if}}
