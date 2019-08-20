@@ -1,6 +1,9 @@
 <h1>Signers</h1>
+<div>
 <ul>
     {{#signedUsers}}
         <li>{{firstname}} {{lastname}}</li>
     {{/signedUsers}}
 </ul>
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+</div>
