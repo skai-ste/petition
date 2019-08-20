@@ -59,7 +59,7 @@ app.post("/register", (req, res) => {
             console.log("RESULT :", result);
             req.session.userId = result.rows[0].id;
             console.log("result.rows[0].id :", result.rows[0].id);
-            res.render("petition");
+            res.redirect("/profile");
         })
         .catch(err => {
             console.log("ERROR :", err);
@@ -82,12 +82,18 @@ app.post("/login", (req, res) => {
                 console.log(match);
                 if (match) {
                     req.session.userId = hashedPsw.id;
-
+                    db.getSignature(hashedPsw.id).then(result => {
+                        console.log("result from GET SIGNATURE:", result);
+                        if (result) {
+                            res.redirect("/thanks");
+                        } else {
+                            res.redirect("/petition");
+                        }
+                    });
                     // if ()
-                    //if the user has a row in the signatures
-                    // table first take that id and put into req.session.signaturesId
+                    // if the user has a row in the signatures table
+                    // first take that id and put into req.session.signaturesId
                     // and then I redirect to thank you. If they don't I redirect to pettition
-                    res.redirect("/profile");
                 } else {
                     res.render("login", {
                         error: true
@@ -108,7 +114,12 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-    db.addUserProfile(req.body.age, req.body.city, req.body.homePage)
+    db.addUserProfile(
+        req.body.age,
+        req.body.city,
+        req.body.homePage,
+        req.session.userId
+    )
         .then(result => {
             console.log("result :", result);
             res.redirect("/petition");
@@ -119,7 +130,6 @@ app.post("/profile", (req, res) => {
                 error: true
             });
         });
-    res.render("profile");
 });
 
 app.get("/petition", (req, res) => {
@@ -127,7 +137,7 @@ app.get("/petition", (req, res) => {
 });
 
 app.post("/petition", (req, res) => {
-    db.addSignature(req.body.signature, req.session.user_id)
+    db.addSignature(req.body.signature, req.session.userId)
         .then(id => {
             console.log(id);
             req.session.signatureId = id;
@@ -144,10 +154,10 @@ app.post("/petition", (req, res) => {
 app.get("/thanks", (req, res) => {
     console.log("req.session.thanks: ", req.session);
     if (req.session.signatureId) {
-        db.getSignature(req.session.signatureId).then(result => {
+        db.getSignature(req.session.userId).then(result => {
             console.log("result :", result);
             res.render("thanks", {
-                signature: result
+                signature: result.signature
             });
         });
     } else {
