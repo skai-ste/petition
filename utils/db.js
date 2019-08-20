@@ -34,7 +34,7 @@ exports.getSignature = function(id) {
 exports.addUser = function(firstName, lastName, email, hashedPsw) {
     return db.query(
         `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING id`,
-        [firstName || null, lastName || null, email || null, hashedPsw || null]
+        [firstName, lastName, email, hashedPsw]
     );
 };
 
@@ -45,4 +45,11 @@ exports.getPassword = function(email) {
             return rows[0];
             // return rows[0].password;
         });
+};
+
+exports.addUserProfile = function(age, city, homePage) {
+    return db.query(
+        `INSERT INTO user_profiles (age, city, url) VALUES ($1, $2, $3) RETURNING id`,
+        [age || null, city || null, homePage || null]
+    );
 };

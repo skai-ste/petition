@@ -57,9 +57,6 @@ app.post("/register", (req, res) => {
         })
         .then(result => {
             console.log("RESULT :", result);
-            // in reult i will have id of user, that data base has line returning id.
-            // If it does it will be in result could be a number, or inside array or object
-            //req.session.userId = result(if it was a numberif not deal with it)
             req.session.userId = result.rows[0].id;
             console.log("result.rows[0].id :", result.rows[0].id);
             res.render("petition");
@@ -85,11 +82,12 @@ app.post("/login", (req, res) => {
                 console.log(match);
                 if (match) {
                     req.session.userId = hashedPsw.id;
+
                     // if ()
                     //if the user has a row in the signatures
                     // table first take that id and put into req.session.signaturesId
                     // and then I redirect to thank you. If they don't I redirect to pettition
-                    res.redirect("/petition");
+                    res.redirect("/profile");
                 } else {
                     res.render("login", {
                         error: true
@@ -103,6 +101,25 @@ app.post("/login", (req, res) => {
                 });
             });
     });
+});
+
+app.get("/profile", (req, res) => {
+    res.render("profile");
+});
+
+app.post("/profile", (req, res) => {
+    db.addUserProfile(req.body.age, req.body.city, req.body.homePage)
+        .then(result => {
+            console.log("result :", result);
+            res.redirect("/petition");
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+            res.render("register", {
+                error: true
+            });
+        });
+    res.render("profile");
 });
 
 app.get("/petition", (req, res) => {
