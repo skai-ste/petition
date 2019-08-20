@@ -159,6 +159,6 @@ app.get("/signers", (req, res) => {
     // res.render("signers");
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log("my server is running");
 });
