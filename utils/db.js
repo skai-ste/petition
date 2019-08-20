@@ -35,8 +35,9 @@ exports.addUser = function(firstName, lastName, email, hashedPsw) {
 
 exports.getPassword = function(email) {
     return db
-        .query(`SELECT password FROM users WHERE email = $1`, [email])
+        .query(`SELECT password, id FROM users WHERE email = $1`, [email])
         .then(({ rows }) => {
-            return rows[0].password;
+            return rows[0];
+            // return rows[0].password;
         });
 };
