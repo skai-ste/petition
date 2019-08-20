@@ -18,6 +18,16 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS user_profiles CASCADE;
+
+CREATE TABLE user_profiles (
+    id SERIAL PRIMARY KEY,
+    age INTEGER,
+    city VARCHAR(99),
+    url VARCHAR(299),
+    user_id INTEGER REFERENCES users(id) NOT NULL UNIQUE
+);
+
 
 -- DROP TABLE IF EXISTS petition;
 --
