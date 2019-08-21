@@ -3,6 +3,8 @@
 <ul>
     {{#signedUsers}}
         <li>{{firstname}} {{lastname}}</li>
+    {{else}}
+        <a href="{{url}}" target="_blank">{{first}} {{last}}</a>
     {{/signedUsers}}
 </ul>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
