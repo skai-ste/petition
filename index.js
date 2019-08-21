@@ -5,6 +5,8 @@ const { hash, compare } = require("./utils/bc");
 var cookieSession = require("cookie-session");
 const csurf = require("csurf");
 const app = express();
+// const { requireNoSignature, requireSignature } = require("./middleware");
+// const profileRouter = require("./profile-routes");
 
 hash("12345");
 
@@ -39,6 +41,12 @@ app.use(
         extended: false
     })
 );
+
+// app.use(profileRouter);
+
+app.get("/", (req, res) => {
+    res.redirect("/register");
+});
 
 app.get("/register", (req, res) => {
     res.render("register");
@@ -136,6 +144,10 @@ app.get("/petition", (req, res) => {
     res.render("petition");
 });
 
+// app.get("/petition", requireNoSignature, (req, res) => {
+//     res.render("petition");
+// });
+
 app.post("/petition", (req, res) => {
     db.addSignature(req.body.signature, req.session.userId)
         .then(id => {
@@ -168,8 +180,10 @@ app.get("/thanks", (req, res) => {
 app.get("/signers", (req, res) => {
     console.log("req.session.signers: ", req.session);
     if (req.session.signatureId) {
+        //update your get info
         db.getInfo()
             .then(result => {
+                console.log("NEW RESULT: ", result);
                 let signedUsers = result.rows;
                 res.render("signers", {
                     layout: "main",
@@ -185,6 +199,11 @@ app.get("/signers", (req, res) => {
     }
     // res.render("signers");
 });
+
+// app.get("/signers/:city", requireSignature, (req, res) => {
+//     res.render("signers");
+// });
+//also put requireSignature on thanks and signers
 
 app.listen(process.env.PORT || 8080, () => {
     console.log("my server is running");
