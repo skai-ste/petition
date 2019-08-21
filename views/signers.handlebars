@@ -2,9 +2,13 @@
 <div>
 <ul>
     {{#signedUsers}}
-        <li>{{firstname}} {{lastname}}</li>
+    {{#if url}}
+        <li><a href="{{url}}" target="_blank">{{firstname}} {{lastname}}</a></li>
     {{else}}
-        <a href="{{url}}" target="_blank">{{first}} {{last}}</a>
+        <li>{{firstname}} {{lastname}}</li>
+    {{/if}}
+    {{age}}
+    {{city}}
     {{/signedUsers}}
 </ul>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
