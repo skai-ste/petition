@@ -200,9 +200,15 @@ app.get("/signers", (req, res) => {
     // res.render("signers");
 });
 
+app.get("/signers/:city", (req, res) => {
+    res.send(`<h1>See all people from ${req.params.city}</h1>`);
+    res.redirect("/signers");
+});
+
 // app.get("/signers/:city", requireSignature, (req, res) => {
 //     res.render("signers");
 // });
+
 //also put requireSignature on thanks and signers
 
 app.listen(process.env.PORT || 8080, () => {
