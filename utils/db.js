@@ -20,7 +20,7 @@ exports.getInfo = function() {
     );
 };
 
-// WHERE LOWER(city) = LOWER($1),
+// WHERE LOWER(city) = LOWER($1)`,
 // [city]
 
 //  WE NEED TO CLEAN THE USER INPUT.

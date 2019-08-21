@@ -27,13 +27,3 @@ CREATE TABLE user_profiles (
     url VARCHAR(299),
     user_id INTEGER REFERENCES users(id) NOT NULL UNIQUE
 );
-
-
--- DROP TABLE IF EXISTS petition;
---
--- CREATE TABLE petition (
---     id SERIAL PRIMARY KEY,
---     firstname VARCHAR(99) NOT NULL CHECK (firstname != ''),
---     lastname VARCHAR(99) NOT NULL CHECK (lastname != ''),
---     signature VARCHAR NOT NULL CHECK (signature != '')
--- );
