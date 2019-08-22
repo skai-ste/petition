@@ -1,10 +1,42 @@
-body {
-    background-color: whitesmoke;
+* {
+    box-sizing: border-box;
 }
-.paint-canvas {
-    border: 1px black solid;
-    display: block;
-    margin: 1rem;
+body {
+    background-color: #202020;
+    display: flex;
+    flex-wrap: wrap;
+}
+#try-again {
+    background-color: tomato;
+}
+#register-container {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+#register-text {
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+input {
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    height: 49px;
+    font-size: 16px;
+    border-bottom: 2px solid lightgrey;
+    background: none;
+    border-radius: 0;
+    color: whitesmoke;
+    margin-top: 20px;
 }
 button {
     height: 2rem;
@@ -14,7 +46,23 @@ button {
     color: black;
     font-family: verdana;
     font-size: 15px;
+    margin-top: 50px;
 }
-#try-again {
-    background-color: tomato;
+#profile-container {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+#profile-text {
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 50px;
+}
+.paint-canvas {
+    border: 1px black solid;
+    display: block;
+    margin: 1rem;
 }

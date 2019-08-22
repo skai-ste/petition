@@ -1,5 +1,5 @@
-<h2>Now please tell us a little bit more about yourself.</h2>
-
+<div id="profile-container">
+<h2 id="profile-text">Now please tell us a little bit more about yourself.</h2>
 <form method='POST'>
     <input type="number" name="age" placeholder="age" autocomplete="off">
     </input>
@@ -10,6 +10,7 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button type='submit'>continue</button>
 </form>
+</div>
 
 {{#if error}}
     <p id="try-again">Please try again!</p>
