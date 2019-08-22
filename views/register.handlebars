@@ -1,5 +1,8 @@
-<h2>Petition is the project which changes peoples life. Register or log in and sign for us if you agree!</h2>
+<div id="register-container">
+<link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+<h1 id="register-text">Let's make something pretty damn good.</h1>
 
+<div id="register-inputs">
 <form method='POST'>
     <input type="text" name="firstname" placeholder="firstname" autocomplete="off" required>
     </input>
@@ -12,6 +15,8 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button type='submit'>sign up</button>
 </form>
+</div>
+</div>
 
 <div id="log-in">
 <a href="/login">Log in</a>
