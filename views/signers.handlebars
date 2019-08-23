@@ -1,15 +1,18 @@
-<h1>Signers</h1>
-<div>
-<ul>
-    {{#signedUsers}}
-    {{#if url}}
-        <li><a href="{{url}}" target="_blank">{{firstname}} {{lastname}}</a></li>
-    {{else}}
-        <li>{{firstname}} {{lastname}}</li>
-    {{/if}}
-    {{age}}
-    <a href="/signers/{{city}}"> {{city}}</a>
-    {{/signedUsers}}
-</ul>
-<input type="hidden" name="_csrf" value="{{csrfToken}}">
+<div id="signers-container">
+    <h1 id="signers-text">Signers:</h1>
+    <ul>
+        {{#signedUsers}}
+        {{#if url}}
+            <li><a id="signers-link" href="{{url}}" target="_blank">{{firstname}} {{lastname}}</a>
+            {{age}}
+            <a id="signers-link" href="/signers/{{city}}">{{city}}</a></li>
+        {{else}}
+            <li>{{firstname}} {{lastname}}
+            {{age}}
+            <a id="signers-link" href="/signers/{{city}}">{{city}}</a>
+        </li>
+        {{/if}}
+        {{/signedUsers}}
+    </ul>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
 </div>

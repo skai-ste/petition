@@ -3,6 +3,7 @@
 const paintCanvas = document.querySelector(".js-paint");
 const context = paintCanvas.getContext("2d");
 context.lineCap = "round";
+context.strokeStyle = "whitesmoke";
 
 let x = 0,
     y = 0;

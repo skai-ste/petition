@@ -3,9 +3,9 @@
 }
 body {
     background-color: #1a1a1a;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-end; */
 }
 .rotated {
     /* width: 250px;
@@ -14,6 +14,9 @@ body {
     /* margin-top: 30px; */
     /* display: flex; */
     /* justify-content: flex-end; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 #log-in {
     color: #1a1a1a;
@@ -84,7 +87,24 @@ button {
     margin-top: 50px;
     outline: none;
 }
+#login-container {
+    margin-top: 5rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+}
+#login-text {
+    width: 100%;
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 40px;
+}
 #profile-container {
+    margin-top: 3rem;
     height: 100%;
     width: 100%;
     display: flex;
@@ -103,8 +123,111 @@ button {
     text-align: center;
     justify-content: center; */
 }
+#petition-container {
+    margin-top: 5rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+}
+#petition-text {
+    width: 100%;
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 40px;
+    /* display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center; */
+}
 .paint-canvas {
+    border: 1px whitesmoke solid;
+    /* position: relative; */
+    display: block;
+    margin: 1rem;
+}
+#thanks-container {
+    margin-top: 5rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+}
+#thanks-text {
+    width: 100%;
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 40px;
+    /* display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center; */
+}
+#signature {
     border: 1px whitesmoke solid;
     display: block;
     margin: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+#see-signers {
+    background-color: #1a1a1a;
+    border: 1px whitesmoke solid;
+    color: whitesmoke;
+    text-decoration: none;
+    font-family: "Lexend Deca", sans-serif;
+    padding: 15px;
+}
+#see-signers:visited {
+    color: whitesmoke;
+    text-decoration: none;
+}
+#signers-container {
+    margin-top: 2rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /* text-align: center; */
+    justify-content: left;
+}
+#signers-text {
+    width: 100%;
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 45px;
+    flex-wrap: wrap;
+    text-align: left;
+    margin-left: 45px;
+}
+#signers-link {
+    color: whitesmoke;
+    text-decoration: none;
+    font-family: "Lexend Deca", sans-serif;
+    padding: 5px;
+}
+#signers-link:visited {
+    color: whitesmoke;
+    text-decoration: none;
+}
+#signers-link:hover {
+    color: grey;
+    text-decoration: none;
+}
+li {
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    list-style-type: none;
+    word-spacing: inherit;
+    margin: 5px;
 }

@@ -1,12 +1,13 @@
-<h2>Please sign here for our petition:</h2>
-
-<form method='POST'>
-    <input id="signInput" type="hidden" name="signature" autocomplete="off">
-    </input>
-    <canvas class="js-paint paint-canvas" width="400" height="100"></canvas>
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <button type='submit'>submit</button>
-</form>
+<div id="petition-container">
+    <h2 id="petition-text">Please sign here:</h2>
+    <form method='POST'>
+        <input id="signInput" type="hidden" name="signature" autocomplete="off">
+        </input>
+        <canvas class="js-paint paint-canvas" width="400" height="100" strokeStyle="whitesmoke"></canvas>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button type='submit'>submit</button>
+    </form>
+</div>
 
 {{#if error}}
     <p id="try-again">Please try again</p>

@@ -1,7 +1,9 @@
-<h2>Thanks for signing, babes!</h2>
+<div id="thanks-container">
+    <h2 id="thanks-text">Thanks for signing!</h2>
 
-<div>
-<img src={{signature}}></img>
-<a href="/signers">See all signers</a>
-<input type="hidden" name="_csrf" value="{{csrfToken}}">
+    <div>
+        <img id="signature" src={{signature}} width="400" height="100"></img>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <a id="see-signers" href="/signers">See all signers</a>
+    </div>
 </div>
