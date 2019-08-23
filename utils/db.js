@@ -27,14 +27,6 @@ exports.getInfo = function() {
 // i.e. str  = "hello"
 // str.startsWith("he") -> true
 
-// then change your handlebars to be able to get needed information
-// then you need rout with :city for different cities, so city names should also be links
-
-// In the case of the homepage url, do not show it but rather link the name with the saved url in the href attribute
-// and then I am checking for http:// https:// -> all entered links should start with http:// or https://.
-// If it doesn't start with "http://" or "https://", do not put it in an href attribute OR
-// if it doesnt start with http:// OR https:// then add it to the front of the string.
-
 exports.addSignature = function(sign, userId) {
     return db.query(
         `INSERT INTO signatures (signature, user_id) VALUES ($1, $2)`,
