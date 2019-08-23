@@ -1,15 +1,31 @@
-exports.requireNoSignature = function(req, res, next) {
-    if (req.session.signatureId) {
-        return res.redirect("/thanks");
-    }
-    next();
-};
-
-exports.requireSignature = function(req, res, next) {
+exports.hasNoSignature = function(req, res, next) {
     if (!req.session.signatureId) {
-        return res.redirect("/petition");
+        next();
+    } else {
+        res.redirect("/thanks");
     }
-    next();
 };
 
-//user id middleware function, user doesnot have an id, user has an id
+exports.hasSignature = function(req, res, next) {
+    if (req.session.signatureId) {
+        next();
+    } else {
+        res.redirect("/petition");
+    }
+};
+
+exports.hasUserId = function(req, res, next) {
+    if (req.session.userId) {
+        next();
+    } else {
+        res.redirect("/register");
+    }
+};
+
+exports.hasNoUserId = function(req, res, next) {
+    if (req.session.userId) {
+        return res.redirect("/petition");
+    } else {
+        next();
+    }
+};

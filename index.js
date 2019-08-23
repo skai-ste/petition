@@ -5,10 +5,13 @@ const { hash, compare } = require("./utils/bc");
 var cookieSession = require("cookie-session");
 const csurf = require("csurf");
 const app = express();
-// const { requireNoSignature, requireSignature } = require("./middleware");
+const {
+    hasSignature,
+    hasNoSignature,
+    hasUserId,
+    hasNoUserId
+} = require("./middleware");
 // const profileRouter = require("./profile-routes");
-
-hash("12345");
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
@@ -48,11 +51,11 @@ app.get("/", (req, res) => {
     res.redirect("/register");
 });
 
-app.get("/register", (req, res) => {
+app.get("/register", hasNoUserId, (req, res) => {
     res.render("register");
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", hasNoUserId, (req, res) => {
     hash(req.body.pwd)
         .then(hashedPsw => {
             console.log("hashedPsw: ", hashedPsw);
@@ -77,15 +80,15 @@ app.post("/register", (req, res) => {
         });
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", hasNoUserId, (req, res) => {
     res.render("login");
 });
 
-app.post("/login", (req, res) => {
-    db.getPassword(req.body.emailaddress).then(hashedPsw => {
-        console.log("hashedPsw :", hashedPsw);
-        compare(req.body.pwd, hashedPsw.password)
-            .then(match => {
+app.post("/login", hasNoUserId, (req, res) => {
+    db.getPassword(req.body.emailaddress)
+        .then(hashedPsw => {
+            console.log("hashedPsw :", hashedPsw);
+            compare(req.body.pwd, hashedPsw.password).then(match => {
                 console.log("did my pasword match?");
                 console.log(match);
                 if (match) {
@@ -98,30 +101,26 @@ app.post("/login", (req, res) => {
                             res.redirect("/petition");
                         }
                     });
-                    // if ()
-                    // if the user has a row in the signatures table
-                    // first take that id and put into req.session.signaturesId
-                    // and then I redirect to thank you. If they don't I redirect to pettition
                 } else {
                     res.render("login", {
                         error: true
                     });
                 }
-            })
-            .catch(err => {
-                console.log("ERROR :", err);
-                res.render("login", {
-                    error: true
-                });
             });
-    });
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+            res.render("login", {
+                error: true
+            });
+        });
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", hasUserId, (req, res) => {
     res.render("profile");
 });
 
-app.post("/profile", (req, res) => {
+app.post("/profile", hasUserId, (req, res) => {
     db.addUserProfile(
         req.body.age,
         req.body.city,
@@ -140,15 +139,11 @@ app.post("/profile", (req, res) => {
         });
 });
 
-app.get("/petition", (req, res) => {
+app.get("/petition", hasUserId, hasNoSignature, (req, res) => {
     res.render("petition");
 });
 
-// app.get("/petition", requireNoSignature, (req, res) => {
-//     res.render("petition");
-// });
-
-app.post("/petition", (req, res) => {
+app.post("/petition", hasUserId, hasNoSignature, (req, res) => {
     db.addSignature(req.body.signature, req.session.userId)
         .then(id => {
             console.log(id);
@@ -163,53 +158,46 @@ app.post("/petition", (req, res) => {
         });
 });
 
-app.get("/thanks", (req, res) => {
-    console.log("req.session.thanks: ", req.session);
-    if (req.session.signatureId) {
-        db.getSignature(req.session.userId).then(result => {
-            console.log("result :", result);
-            res.render("thanks", {
-                signature: result.signature
-            });
+app.get("/thanks", hasUserId, hasSignature, (req, res) => {
+    db.getSignature(req.session.userId).then(result => {
+        // console.log("result :", result);
+        res.render("thanks", {
+            signature: result.signature
         });
-    } else {
-        res.redirect("/petition");
-    }
+    });
 });
 
-app.get("/signers", (req, res) => {
-    console.log("req.session.signers: ", req.session);
-    if (req.session.signatureId) {
-        //update your get info
-        db.getInfo()
-            .then(result => {
-                console.log("NEW RESULT: ", result);
-                let signedUsers = result.rows;
-                res.render("signers", {
-                    layout: "main",
-                    signedUsers: signedUsers
-                });
-                console.log("result: ", result.rows.length);
-            })
-            .catch(err => {
-                console.log("ERROR :", err);
+app.get("/signers", hasUserId, hasSignature, (req, res) => {
+    db.getInfo()
+        .then(result => {
+            console.log("NEW RESULT: ", result);
+            let signedUsers = result.rows;
+            res.render("signers", {
+                layout: "main",
+                signedUsers: signedUsers
             });
-    } else {
-        res.redirect("/petition");
-    }
-    // res.render("signers");
+            // console.log("result: ", result.rows.length);
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+        });
 });
 
-app.get("/signers/:city", (req, res) => {
-    res.send(`<h1>See all people from ${req.params.city}</h1>`);
-    res.redirect("/signers");
+app.get("/signers/:city", hasUserId, hasSignature, (req, res) => {
+    db.getInfo()
+        .then(result => {
+            console.log("NEW RESULT: ", result);
+            let signersFrom = result.rows;
+            res.render("/signers/:city", {
+                layout: "main",
+                signersFrom: signersFrom
+            });
+            // console.log("result: ", result.rows.length);
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+        });
 });
-
-// app.get("/signers/:city", requireSignature, (req, res) => {
-//     res.render("signers");
-// });
-
-//also put requireSignature on thanks and signers
 
 app.listen(process.env.PORT || 8080, () => {
     console.log("my server is running");
