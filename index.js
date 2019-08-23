@@ -133,7 +133,7 @@ app.post("/profile", hasUserId, (req, res) => {
         })
         .catch(err => {
             console.log("ERROR :", err);
-            res.render("register", {
+            res.render("profile", {
                 error: true
             });
         });
@@ -146,7 +146,6 @@ app.get("/petition", hasUserId, hasNoSignature, (req, res) => {
 app.post("/petition", hasUserId, hasNoSignature, (req, res) => {
     db.addSignature(req.body.signature, req.session.userId)
         .then(id => {
-            console.log(id);
             req.session.signatureId = id;
             res.redirect("/thanks");
         })
