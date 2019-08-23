@@ -28,14 +28,15 @@ exports.getInfo = function() {
 // str.startsWith("he") -> true
 
 exports.addSignature = function(sign, userId) {
-    return db.query(
-        `INSERT INTO signatures (signature, user_id) VALUES ($1, $2)`,
-        [sign, userId]
-        // [firstName || null, lastName || null, sign || null] is it's underfined it not gonna put in the table
-    );
-    // .then(({ rows }) => {
-    //     return rows[0].id;
-    // });
+    return db
+        .query(
+            `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id`,
+            [sign, userId]
+            // [firstName || null, lastName || null, sign || null] is it's underfined it not gonna put in the table
+        )
+        .then(({ rows }) => {
+            return rows[0].id;
+        });
 };
 
 exports.getSignature = function(id) {
