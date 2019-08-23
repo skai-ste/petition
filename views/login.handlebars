@@ -1,13 +1,14 @@
-<h2>Petition is the project which changes peoples life. Register or log in and sign for us if you agree!</h2>
-
-<form method='POST'>
-    <input type="email" name="emailaddress" placeholder="email" autocomplete="off">
-    </input>
-    <input type="password" name="pwd" placeholder="password" autocomplete="off">
-    </input>
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <button type='submit'>log in</button>
-</form>
+<div id="login-container">
+    <h2 id="login-text">Log in here:</h2>
+    <form method='POST'>
+        <input type="email" name="emailaddress" placeholder="email" autocomplete="off">
+        </input>
+        <input type="password" name="pwd" placeholder="password" autocomplete="off">
+        </input>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button type='submit'>log in</button>
+    </form>
+</div>
 
 {{#if error}}
     <p id="try-again">Please try again!</p>
