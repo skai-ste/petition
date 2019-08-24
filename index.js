@@ -180,7 +180,7 @@ app.get("/signers", hasUserId, hasSignature, (req, res) => {
 });
 
 app.get("/signers/:city", hasUserId, hasSignature, (req, res) => {
-    db.getInfo()
+    db.getCityInfo(`${req.params.city}`)
         .then(result => {
             let signersFrom = result.rows;
             res.render("city", {

@@ -20,12 +20,19 @@ exports.getInfo = function() {
     );
 };
 
-// WHERE LOWER(city) = LOWER($1)`,
-// [city]
-
-//  WE NEED TO CLEAN THE USER INPUT.
-// i.e. str  = "hello"
-// str.startsWith("he") -> true
+exports.getCityInfo = function(city) {
+    return db.query(
+        `
+        SELECT signatures.user_id, firstname, lastname, age, city, url
+        FROM signatures
+        LEFT JOIN users
+        ON users.id = signatures.user_id
+        LEFT JOIN user_profiles
+        ON signatures.user_id = user_profiles.user_id
+        WHERE LOWER(city) = LOWER($1)`,
+        [city]
+    );
+};
 
 exports.addSignature = function(sign, userId) {
     return db
