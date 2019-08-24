@@ -186,10 +186,12 @@ app.get("/signers/:city", hasUserId, hasSignature, (req, res) => {
     db.getInfo()
         .then(result => {
             console.log("NEW RESULT: ", result);
+            // ${req.params.city}
             let signersFrom = result.rows;
-            res.render("/signers/:city", {
+            res.render("city", {
                 layout: "main",
-                signersFrom: signersFrom
+                signersFrom: signersFrom,
+                city: `${req.params.city}`
             });
             // console.log("result: ", result.rows.length);
         })
