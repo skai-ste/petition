@@ -1,0 +1,28 @@
+<div id="edit-container">
+    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+    <h1 id="edit-text">Edit your profile here:</h1>
+<div id="edit-inputs">
+    <form method='POST'>
+        <input type="text" name="firstname" placeholder="firstname" autocomplete="off" required>
+        </input>
+        <input type="text" name="lastname" placeholder="lastname" autocomplete="off" required>
+        </input>
+        <input type="email" name="emailaddress" placeholder="email" autocomplete="off" required>
+        </input>
+        <input type="password" name="pwd" placeholder="password" autocomplete="off" required>
+        </input>
+        <input type="number" name="age" placeholder="age" autocomplete="off">
+        </input>
+        <input type="text" name="city" placeholder="city" autocomplete="off">
+        </input>
+        <input type="text" name="homePage" placeholder="homepage" autocomplete="off">
+        </input>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button type='submit'>update</button>
+    </form>
+</div>
+</div>
+
+{{#if error}}
+    <p id="try-again">Please try again!</p>
+{{/if}}

@@ -159,7 +159,6 @@ app.post("/petition", hasUserId, hasNoSignature, (req, res) => {
 
 app.get("/thanks", hasUserId, hasSignature, (req, res) => {
     db.getSignature(req.session.userId).then(result => {
-        // console.log("result :", result);
         res.render("thanks", {
             signature: result.signature
         });
@@ -169,13 +168,11 @@ app.get("/thanks", hasUserId, hasSignature, (req, res) => {
 app.get("/signers", hasUserId, hasSignature, (req, res) => {
     db.getInfo()
         .then(result => {
-            console.log("NEW RESULT: ", result);
             let signedUsers = result.rows;
             res.render("signers", {
                 layout: "main",
                 signedUsers: signedUsers
             });
-            // console.log("result: ", result.rows.length);
         })
         .catch(err => {
             console.log("ERROR :", err);
@@ -185,15 +182,25 @@ app.get("/signers", hasUserId, hasSignature, (req, res) => {
 app.get("/signers/:city", hasUserId, hasSignature, (req, res) => {
     db.getInfo()
         .then(result => {
-            console.log("NEW RESULT: ", result);
-            // ${req.params.city}
             let signersFrom = result.rows;
             res.render("city", {
                 layout: "main",
                 signersFrom: signersFrom,
                 city: `${req.params.city}`
             });
-            // console.log("result: ", result.rows.length);
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+        });
+});
+
+app.get("/edit", hasUserId, hasSignature, (req, res) => {
+    db.getInfo()
+        .then(result => {
+            console.log("NEW RESULT: ", result);
+            res.render("edit", {
+                layout: "main"
+            });
         })
         .catch(err => {
             console.log("ERROR :", err);
