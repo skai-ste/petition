@@ -63,9 +63,18 @@ exports.getPassword = function(email) {
         });
 };
 
-exports.addUserProfile = function(age, city, homePage, userId) {
+exports.addUserProfile = function(age, city, url, userId) {
+    const sanitizedUrl = sanitize(url);
     return db.query(
         `INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id`,
-        [age || null, city || null, homePage || null, userId || null]
+        [age || null, city || null, sanitizedUrl || null, userId || null]
     );
 };
+
+function sanitize(url) {
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+        return url;
+    } else {
+        return "https://" + url;
+    }
+}
