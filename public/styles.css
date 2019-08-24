@@ -249,3 +249,22 @@ li {
     text-align: left;
     margin-left: 45px;
 }
+#edit-container {
+    margin-top: 2rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+}
+#edit-text {
+    width: 70%;
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 50px;
+}
+#edit-inputs {
+    width: 50%;
+}
