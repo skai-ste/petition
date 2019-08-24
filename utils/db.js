@@ -34,6 +34,22 @@ exports.getCityInfo = function(city) {
     );
 };
 
+exports.getUserProfileInfo = function(userId) {
+    return db
+        .query(
+            `
+        SELECT user_profiles.user_id, firstname, lastname, email, password, age, city, url
+        FROM user_profiles
+        JOIN users
+        ON users.id = user_profiles.user_id
+        WHERE (user_profiles.user_id) = ($1)`,
+            [userId]
+        )
+        .then(({ rows }) => {
+            return rows[0];
+        });
+};
+
 exports.addSignature = function(sign, userId) {
     return db
         .query(

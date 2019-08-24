@@ -195,11 +195,12 @@ app.get("/signers/:city", hasUserId, hasSignature, (req, res) => {
 });
 
 app.get("/edit", hasUserId, hasSignature, (req, res) => {
-    db.getInfo()
-        .then(result => {
-            console.log("NEW RESULT: ", result);
+    db.getUserProfileInfo(req.session.userId)
+        .then(profile => {
+            console.log("NEW RESULT: ", profile);
             res.render("edit", {
-                layout: "main"
+                layout: "main",
+                profile: profile
             });
         })
         .catch(err => {
