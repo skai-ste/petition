@@ -115,6 +115,10 @@ exports.getSignature = function(id) {
         });
 };
 
+exports.deleteSignature = function(id) {
+    return db.query(`DELETE FROM signatures WHERE user_id = $1`, [id]);
+};
+
 exports.addUser = function(firstName, lastName, email, hashedPsw) {
     return db.query(
         `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING id`,

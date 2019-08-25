@@ -5,8 +5,14 @@
     <h2 id="thanks-text">Thanks for signing!</h2>
     <div>
         <img id="signature" src={{signature}} width="400" height="100"></img>
-        <input type="hidden" name="_csrf" value="{{csrfToken}}"></input>
-
-        <a id="see-signers" href="/signers">see all signers</a>
+        <div>
+            <a id="see-signers" href="/signers">see all signers</a>
+        </div>
     </div>
 </div>
+<form method='POST' action="/delete_petition">
+    <div class="center-button">
+        <button id="delete-button">delete signature</button>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"></input>
+    </div>
+</form>

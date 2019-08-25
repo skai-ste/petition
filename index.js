@@ -151,6 +151,20 @@ app.post("/petition", hasUserId, hasNoSignature, (req, res) => {
             res.redirect("/thanks");
         })
         .catch(err => {
+            res.render("petition", {
+                error: true
+            });
+        });
+});
+
+app.post("/delete_petition", hasUserId, hasSignature, (req, res) => {
+    req.session.signatureId = null;
+    db.deleteSignature(req.session.userId)
+        .then(id => {
+            console.log("Session:", req.session);
+            res.redirect("/petition");
+        })
+        .catch(err => {
             console.log("ERROR :", err);
             res.render("petition", {
                 error: true

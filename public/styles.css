@@ -203,11 +203,28 @@ button {
     color: whitesmoke;
     text-decoration: none;
     font-family: "Lexend Deca", sans-serif;
-    padding: 15px;
+    padding: 14px;
+    margin: 30px;
 }
 #see-signers:visited {
     color: whitesmoke;
     text-decoration: none;
+}
+.center-button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#delete-button {
+    height: 3rem;
+    width: 8.3rem;
+    background-color: #1a1a1a;
+    border: 1px whitesmoke solid;
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 15px;
+    margin-top: 50px;
+    outline: none;
 }
 #signers-container {
     margin-top: 2rem;
