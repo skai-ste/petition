@@ -51,12 +51,29 @@ exports.getUserProfileInfo = function(userId) {
 };
 
 exports.updateUserProfileData = function(userId, userData) {
-    console.log("USER DATA: ", userData);
-    return db.query(
-        `
-        UPDATE users SET firstname = $2, lastname = $3, email = $4 WHERE id = $1`,
-        [userId, userData.firstname, userData.lastname, userData.emailaddress]
-    );
+    // console.log("USER DATA: ", userData);
+    return Promise.all([
+        db.query(
+            `
+            UPDATE users SET firstname = $2, lastname = $3, email = $4 WHERE id = $1
+            `,
+            [
+                userId,
+                userData.firstname,
+                userData.lastname,
+                userData.emailaddress
+            ]
+        ),
+        db.query(
+            `
+            INSERT INTO user_profiles (user_id, age, city, url)
+            VALUES ($1, $2, $3, $4)
+            ON CONFLICT (user_id)
+            DO UPDATE SET age = $2, city = $3, url = $4;
+            `,
+            [userId, userData.age, userData.city, userData.url]
+        )
+    ]);
 };
 
 exports.addSignature = function(sign, userId) {
