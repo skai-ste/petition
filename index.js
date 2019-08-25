@@ -57,7 +57,7 @@ app.get("/register", hasNoUserId, (req, res) => {
 });
 
 app.post("/register", hasNoUserId, (req, res) => {
-    hash(req.body.pwd)
+    hash(req.body.password)
         .then(hashedPsw => {
             console.log("hashedPsw: ", hashedPsw);
             return db.addUser(
@@ -89,7 +89,7 @@ app.post("/login", hasNoUserId, (req, res) => {
     db.getPassword(req.body.emailaddress)
         .then(hashedPsw => {
             console.log("hashedPsw :", hashedPsw);
-            compare(req.body.pwd, hashedPsw.password).then(match => {
+            compare(req.body.password, hashedPsw.password).then(match => {
                 console.log("did my pasword match?");
                 console.log(match);
                 if (match) {
@@ -210,15 +210,13 @@ app.get("/edit", hasUserId, hasSignature, (req, res) => {
 });
 
 app.post("/edit", hasUserId, hasSignature, (req, res) => {
-    db.updateUserProfileData(req.session.userId, req.body)
+    var hashedPsw = null;
+    if (req.body.password) {
+        hashedPsw = hash(req.body.password);
+    }
+    db.updateUserProfileData(req.session.userId, req.body, hashedPsw)
         .then(result => {
-            db.getUserProfileInfo(req.session.userId).then(profile => {
-                console.log("NEW RESULT: ", profile);
-                res.render("edit", {
-                    layout: "main",
-                    profile: profile
-                });
-            });
+            res.redirect("/petition");
         })
         .catch(err => {
             console.log("ERROR :", err);

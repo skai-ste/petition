@@ -50,8 +50,22 @@ exports.getUserProfileInfo = function(userId) {
         });
 };
 
-exports.updateUserProfileData = function(userId, userData) {
+exports.updateUserProfileData = function(userId, userData, hashedPsw) {
     // console.log("USER DATA: ", userData);
+    if (hashedPsw) {
+        hashedPsw
+            .then(password => {
+                return db.query(
+                    `
+                UPDATE users SET password = $2 WHERE id = $1
+                `,
+                    [userId, password]
+                );
+            })
+            .catch(err => {
+                console.log("ERROR PASSWORD :", err);
+            });
+    }
     return Promise.all([
         db.query(
             `
