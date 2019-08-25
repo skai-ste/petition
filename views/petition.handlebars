@@ -1,3 +1,9 @@
+<form method='POST' action="/logout">
+    <div class="log-out-place">
+        <button id="log-out">log out</button>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"></input>
+    </div>
+</form>
 <div id="petition-container">
     <h2 id="petition-text">Please sign here:</h2>
     <form method='POST'>

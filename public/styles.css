@@ -3,17 +3,13 @@
 }
 body {
     background-color: #1a1a1a;
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end; */
 }
 .rotated {
-    /* width: 250px;
-    height: 50px; */
-    /* transform: rotate(90deg); */
-    /* margin-top: 30px; */
-    /* display: flex; */
-    /* justify-content: flex-end; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.edit-place {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -24,28 +20,43 @@ body {
     font-family: "Lexend Deca", sans-serif;
     background-color: whitesmoke;
     margin-right: 10px;
-    /* margin: 5px; */
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
     display: flex;
     justify-content: flex-end;
-    /* flex-wrap: wrap-reverse; */
-    /* text-align: center; */
-    /* align-self: right;
-    justify-content: right; */
 }
 #log-in:visited {
     color: #1a1a1a;
     text-decoration: none;
 }
+.log-out-place {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+#log-out {
+    margin-top: 0;
+    height: 2rem;
+    width: 7rem;
+    background-color: #1a1a1a;
+    border: 1px whitesmoke solid;
+    color: whitesmoke;
+    font-family: "Lexend Deca", sans-serif;
+    outline: none;
+}
 #try-again {
-    background-color: red;
+    background-color: whitesmoke;
     color: #1a1a1a;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
 }
 #register-container {
-    /* margin-top: 1rem; */
     height: 100%;
     width: 100%;
     display: flex;
@@ -59,10 +70,6 @@ body {
     color: whitesmoke;
     font-family: "Lexend Deca", sans-serif;
     font-size: 70px;
-    /* display: flex;
-    flex-wrap: wrap;
-    text-align: center;
-    justify-content: center; */
 }
 input {
     width: 95%;
@@ -118,10 +125,6 @@ button {
     color: whitesmoke;
     font-family: "Lexend Deca", sans-serif;
     font-size: 50px;
-    /* display: flex;
-    flex-wrap: wrap;
-    text-align: center;
-    justify-content: center; */
 }
 #petition-container {
     margin-top: 5rem;
@@ -232,7 +235,6 @@ button {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    /* text-align: center; */
     justify-content: left;
 }
 #signers-text {
@@ -248,7 +250,6 @@ button {
     color: whitesmoke;
     text-decoration: none;
     font-family: "Lexend Deca", sans-serif;
-    padding: 5px;
 }
 #signers-link:visited {
     color: whitesmoke;
@@ -271,7 +272,6 @@ li {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    /* text-align: center; */
     justify-content: left;
 }
 #signers-from-city-text {
