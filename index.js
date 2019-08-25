@@ -34,6 +34,7 @@ app.use(csurf());
 app.use(function(req, res, next) {
     res.setHeader("X-Frame-Options", "DENY");
     res.locals.csrfToken = req.csrfToken();
+    // console.log("Setting csrf to ", req.csrfToken());
     next();
 });
 
@@ -201,6 +202,22 @@ app.get("/edit", hasUserId, hasSignature, (req, res) => {
             res.render("edit", {
                 layout: "main",
                 profile: profile
+            });
+        })
+        .catch(err => {
+            console.log("ERROR :", err);
+        });
+});
+
+app.post("/edit", hasUserId, hasSignature, (req, res) => {
+    db.updateUserProfileData(req.session.userId, req.body)
+        .then(result => {
+            db.getUserProfileInfo(req.session.userId).then(profile => {
+                console.log("NEW RESULT: ", profile);
+                res.render("edit", {
+                    layout: "main",
+                    profile: profile
+                });
             });
         })
         .catch(err => {
