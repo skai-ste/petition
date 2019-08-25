@@ -210,6 +210,7 @@ app.get("/signers/:city", hasUserId, hasSignature, (req, res) => {
 });
 
 app.get("/edit", hasUserId, hasSignature, (req, res) => {
+    console.log("Session:", req.session);
     db.getUserProfileInfo(req.session.userId)
         .then(profile => {
             console.log("NEW RESULT: ", profile);
@@ -235,6 +236,11 @@ app.post("/edit", hasUserId, hasSignature, (req, res) => {
         .catch(err => {
             console.log("ERROR :", err);
         });
+});
+
+app.post("/logout", hasUserId, (req, res) => {
+    req.session = null;
+    res.redirect("/");
 });
 
 app.listen(process.env.PORT || 8080, () => {

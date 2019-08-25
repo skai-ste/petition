@@ -1,3 +1,9 @@
+<form method='POST' action="/logout">
+    <div class="log-out-place">
+        <button id="log-out">log out</button>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"></input>
+    </div>
+</form>
 <div id="signers-container">
     <h1 id="signers-text">Signers:</h1>
     <ul>
@@ -7,7 +13,7 @@
             {{age}}
             <a id="signers-link" href="/signers/{{city}}">{{city}}</a></li>
         {{else}}
-            <li>{{firstname}} {{lastname}}
+            <li> {{firstname}} {{lastname}}
             {{age}}
             <a id="signers-link" href="/signers/{{city}}">{{city}}</a>
         </li>
