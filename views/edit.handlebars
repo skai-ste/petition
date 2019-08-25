@@ -10,7 +10,7 @@
         </input>
         <input type="email" name="emailaddress" placeholder="email" value="{{email}}" autocomplete="off" required>
         </input>
-        <input type="password" name="pwd" placeholder="password" autocomplete="off" required>
+        <input type="password" name="pwd" placeholder="password" autocomplete="off">
         </input>
         <input type="number" name="age" placeholder="age" value="age" autocomplete="off">
         </input>
@@ -18,7 +18,8 @@
         </input>
         <input type="text" name="homePage" placeholder="homepage" value="{{url}}" autocomplete="off">
         </input>
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+        </input>
         <button type='submit'>update</button>
         {{/with}}
     </form>

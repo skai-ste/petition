@@ -50,6 +50,15 @@ exports.getUserProfileInfo = function(userId) {
         });
 };
 
+exports.updateUserProfileData = function(userId, userData) {
+    console.log("USER DATA: ", userData);
+    return db.query(
+        `
+        UPDATE users SET firstname = $2, lastname = $3, email = $4 WHERE id = $1`,
+        [userId, userData.firstname, userData.lastname, userData.emailaddress]
+    );
+};
+
 exports.addSignature = function(sign, userId) {
     return db
         .query(
