@@ -85,7 +85,12 @@ exports.updateUserProfileData = function(userId, userData, hashedPsw) {
             ON CONFLICT (user_id)
             DO UPDATE SET age = $2, city = $3, url = $4;
             `,
-            [userId, userData.age, userData.city, userData.url]
+            [
+                userId,
+                userData.age || null,
+                userData.city || null,
+                userData.url || null
+            ]
         )
     ]);
 };
@@ -135,7 +140,12 @@ exports.addUserProfile = function(age, city, url, userId) {
 };
 
 function sanitize(url) {
-    if (url.startsWith("http://") || url.startsWith("https://")) {
+    if (
+        url == null ||
+        url == "" ||
+        url.startsWith("http://") ||
+        url.startsWith("https://")
+    ) {
         return url;
     } else {
         return "https://" + url;

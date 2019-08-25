@@ -169,6 +169,23 @@ button {
     text-align: center;
     justify-content: center; */
 }
+#edit-button {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-family: "Lexend Deca", sans-serif;
+    background-color: whitesmoke;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    justify-content: flex-end;
+}
+#log-in:visited {
+    color: #1a1a1a;
+    text-decoration: none;
+}
 #signature {
     border: 1px whitesmoke solid;
     display: block;
