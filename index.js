@@ -125,7 +125,7 @@ app.post("/profile", hasUserId, (req, res) => {
     db.addUserProfile(
         req.body.age,
         req.body.city,
-        req.body.homePage,
+        req.body.url,
         req.session.userId
     )
         .then(result => {
