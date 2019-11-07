@@ -51,7 +51,6 @@ exports.getUserProfileInfo = function(userId) {
 };
 
 exports.updateUserProfileData = function(userId, userData, hashedPsw) {
-    // console.log("USER DATA: ", userData);
     if (hashedPsw) {
         hashedPsw
             .then(password => {
@@ -100,7 +99,6 @@ exports.addSignature = function(sign, userId) {
         .query(
             `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id`,
             [sign, userId]
-            // [firstName || null, lastName || null, sign || null] is it's underfined it not gonna put in the table
         )
         .then(({ rows }) => {
             return rows[0].id;
@@ -131,7 +129,6 @@ exports.getPassword = function(email) {
         .query(`SELECT password, id FROM users WHERE email = $1`, [email])
         .then(({ rows }) => {
             return rows[0];
-            // return rows[0].password;
         });
 };
 

@@ -141,14 +141,9 @@ button {
     color: whitesmoke;
     font-family: "Lexend Deca", sans-serif;
     font-size: 40px;
-    /* display: flex;
-    flex-wrap: wrap;
-    text-align: center;
-    justify-content: center; */
 }
 .paint-canvas {
     border: 1px whitesmoke solid;
-    /* position: relative; */
     display: block;
     margin: 1rem;
 }
@@ -167,10 +162,6 @@ button {
     color: whitesmoke;
     font-family: "Lexend Deca", sans-serif;
     font-size: 40px;
-    /* display: flex;
-    flex-wrap: wrap;
-    text-align: center;
-    justify-content: center; */
 }
 #edit-button {
     color: #1a1a1a;

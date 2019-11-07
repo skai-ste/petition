@@ -10,8 +10,7 @@ const {
     hasNoSignature,
     hasUserId,
     hasNoUserId
-} = require("./middleware");
-// const profileRouter = require("./profile-routes");
+} = require("./utils/middleware");
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
@@ -34,7 +33,6 @@ app.use(csurf());
 app.use(function(req, res, next) {
     res.setHeader("X-Frame-Options", "DENY");
     res.locals.csrfToken = req.csrfToken();
-    // console.log("Setting csrf to ", req.csrfToken());
     next();
 });
 
@@ -45,8 +43,6 @@ app.use(
         extended: false
     })
 );
-
-// app.use(profileRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/register");
@@ -59,7 +55,6 @@ app.get("/register", hasNoUserId, (req, res) => {
 app.post("/register", hasNoUserId, (req, res) => {
     hash(req.body.password)
         .then(hashedPsw => {
-            console.log("hashedPsw: ", hashedPsw);
             return db.addUser(
                 req.body.firstname,
                 req.body.lastname,
@@ -68,13 +63,10 @@ app.post("/register", hasNoUserId, (req, res) => {
             );
         })
         .then(result => {
-            console.log("RESULT :", result);
             req.session.userId = result.rows[0].id;
-            console.log("result.rows[0].id :", result.rows[0].id);
             res.redirect("/profile");
         })
         .catch(err => {
-            console.log("ERROR :", err);
             res.render("register", {
                 error: true
             });
@@ -88,14 +80,10 @@ app.get("/login", hasNoUserId, (req, res) => {
 app.post("/login", hasNoUserId, (req, res) => {
     db.getPassword(req.body.emailaddress)
         .then(hashedPsw => {
-            console.log("hashedPsw :", hashedPsw);
             compare(req.body.password, hashedPsw.password).then(match => {
-                console.log("did my pasword match?");
-                console.log(match);
                 if (match) {
                     req.session.userId = hashedPsw.id;
                     db.getSignature(hashedPsw.id).then(result => {
-                        console.log("result from GET SIGNATURE:", result);
                         if (result) {
                             res.redirect("/thanks");
                         } else {
@@ -110,7 +98,6 @@ app.post("/login", hasNoUserId, (req, res) => {
             });
         })
         .catch(err => {
-            console.log("ERROR :", err);
             res.render("login", {
                 error: true
             });
@@ -129,11 +116,9 @@ app.post("/profile", hasUserId, (req, res) => {
         req.session.userId
     )
         .then(result => {
-            console.log("result :", result);
             res.redirect("/petition");
         })
         .catch(err => {
-            console.log("ERROR :", err);
             res.render("profile", {
                 error: true
             });
@@ -161,11 +146,9 @@ app.post("/delete_petition", hasUserId, hasSignature, (req, res) => {
     req.session.signatureId = null;
     db.deleteSignature(req.session.userId)
         .then(id => {
-            console.log("Session:", req.session);
             res.redirect("/petition");
         })
         .catch(err => {
-            console.log("ERROR :", err);
             res.render("petition", {
                 error: true
             });
@@ -213,7 +196,6 @@ app.get("/edit", hasUserId, hasSignature, (req, res) => {
     console.log("Session:", req.session);
     db.getUserProfileInfo(req.session.userId)
         .then(profile => {
-            console.log("NEW RESULT: ", profile);
             res.render("edit", {
                 layout: "main",
                 profile: profile

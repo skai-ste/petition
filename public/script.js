@@ -1,5 +1,3 @@
-// console.log("sanity check");
-
 const paintCanvas = document.querySelector(".js-paint");
 const context = paintCanvas.getContext("2d");
 context.lineCap = "round";
